@@ -14,10 +14,6 @@ export default function RealtimeMessages({
   const { supabase } = useOutletContext<SupabaseOutletContext>();
 
   useEffect(() => {
-    setMessages(serverMessages);
-  }, [serverMessages]);
-
-  useEffect(() => {
     const channel = supabase
       .channel("*")
       .on(

@@ -22,7 +22,6 @@ export const action = async ({ request }: ActionArgs) => {
 };
 
 export const loader = async ({ request }: LoaderArgs) => {
-  console.log("fetching server messages");
   const response = new Response();
   const supabase = createServerSupabase({ request, response });
   const { data } = await supabase.from("messages").select();
