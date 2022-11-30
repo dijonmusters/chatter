@@ -1,9 +1,10 @@
 import { Form, useLoaderData } from "@remix-run/react";
 import createServerSupabase from "utils/supabase.server";
-
-import { ActionArgs, json, LoaderArgs } from "@remix-run/node";
+import { json } from "@remix-run/node";
 import Login from "components/login";
 import RealtimeMessages from "components/realtime-messages";
+
+import type { ActionArgs, LoaderArgs } from "@remix-run/node";
 
 export const action = async ({ request }: ActionArgs) => {
   const response = new Response();
@@ -24,12 +25,15 @@ export const action = async ({ request }: ActionArgs) => {
 export const loader = async ({ request }: LoaderArgs) => {
   const response = new Response();
   const supabase = createServerSupabase({ request, response });
+
   const { data } = await supabase.from("messages").select();
+
   return json({ messages: data ?? [] }, { headers: response.headers });
 };
 
 export default function Index() {
   const { messages } = useLoaderData<typeof loader>();
+
   return (
     <>
       <Login />
